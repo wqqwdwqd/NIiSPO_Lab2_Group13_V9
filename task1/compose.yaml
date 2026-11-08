@@ -1,0 +1,15 @@
+services:
+  worker1:
+    build: ./worker1
+    volumes:
+      - ./data:/var/data
+      - ./result-1:/var/result
+
+  worker2:
+    build: ./worker2
+    depends_on:
+      worker1:
+        condition: service_completed_successfully
+    volumes:
+      - ./result-1:/var/data:ro
+      - ./result:/var/result
